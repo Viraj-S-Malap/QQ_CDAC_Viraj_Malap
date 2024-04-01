@@ -1,0 +1,69 @@
+//In our Spring Boot project we have to add these dependencies in pom.xml 
+//This program uses PDFBox to extract text content from the PDF and Tess4J for OCR text extraction from images within the PDF.
+//Make sure to have Tesseract OCR installed on your system and its executable path set in your environment variables.
+
+<dependencies>
+    <!-- Apache PDFBox -->
+    <dependency>
+        <groupId>org.apache.pdfbox</groupId>
+        <artifactId>pdfbox</artifactId>
+        <version>2.0.24</version>
+    </dependency>
+
+    <!-- Tess4J (Tesseract OCR wrapper for Java) -->
+    <dependency>
+        <groupId>net.sourceforge.tess4j</groupId>
+        <artifactId>tess4j</artifactId>
+        <version>4.5.4</version>
+    </dependency>
+</dependencies>
+
+
+//Bussiness Logic or Main Code
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.PDFTextStripperByArea;
+import net.sourceforge.tess4j.ITesseract;
+import net.sourceforge.tess4j.Tesseract;
+import java.awt.Rectangle;
+import java.io.File;
+
+public class PdfToOcrSheet {
+
+    public static void main(String[] args) {
+        try {
+            PDDocument document = PDDocument.load(new File("F:\QQ Test PDFs"));
+
+            PDFTextStripperByArea stripper = new PDFTextStripperByArea();
+            stripper.setSortByPosition(true);
+
+            ITesseract tess = new Tesseract();
+
+            for (int i = 0; i < document.getNumberOfPages(); i++) {
+                
+                PDFTextStripper tStripper = new PDFTextStripper();
+                tStripper.setStartPage(i + 1);
+                tStripper.setEndPage(i + 1);
+                String pdfText = tStripper.getText(document);
+
+                
+                tess.setPageSegMode(1); 
+                String ocrText = tess.doOCR(new File("F:\QQ Test PDFs"), new Rectangle(0, 0, 800, 600));
+
+                
+                System.out.println("Page " + (i + 1) + " Text:");
+                System.out.println("From PDF: " + pdfText);
+                System.out.println("From OCR: " + ocrText);
+            }
+
+            
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
