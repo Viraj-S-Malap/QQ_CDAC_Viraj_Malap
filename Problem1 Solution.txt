@@ -1,0 +1,36 @@
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
+
+public class MarathiToEnglishTranslator {
+
+    public static void main(String[] args) {
+
+        Translate translate = TranslateOptions.getDefaultInstance().getService();
+
+
+        String marathiText1 = "(4) भू-मा पन,पोटहिस्सा व  घरक्रमांक(असल्य स) : पालिकेचे नाव:धुळेइतर वर्णन :, इतर माहिती : ग्रापंमा क्र 515 क्षेत्र 13 X 15 = 195 चौ .फुट( ( MILKAT NUMBER : 515 ; ) )";
+                                                                         
+        String marathiText2 = "(7) दस्तऐवज करुन देणा-या /लिहून ठेवणा-या  पक्षकाराचे नाव किंवा दिवाणी न्यायालयाचा हुकुमनामा किंवा आदेश असल्यास,प्रतिवादिचे नाव व पत्ता .";
+
+
+        String marathiText3 = "(8)दस्तऐवज करुन घेणा-या पक्षकाराचे नाव किंवा दिवाणी न्यायालया चा हुकुमनामा किंवा आदेश असल्यास,प्रतिवादिचे नाव व पत्ता : 1): नाव:-दि नंदुरदुबार मर्चंटस को ऑप बॅक लि . नंदुरदुबार शाखा निजामपुर ता साक्री - - वय:-43; पत्ता :-प्लॉट नं: -, मा ळा नं: -, इमारतीचे नाव: -, ब्लॉक नं: -, रोड नं: चिपली पाडा ता साक्री , महाराष्ट्र, धुले. पिन कोड:-424304 पॅन न
+
+        Translation translation1 =
+                translate.translate(marathiText1, Translate.TranslateOption.sourceLanguage("mr"), Translate.TranslateOption.targetLanguage("en"));
+
+        Translation translation2 =
+                translate.translate(marathiText2, Translate.TranslateOption.sourceLanguage("mr"), Translate.TranslateOption.targetLanguage("en"));
+        
+        Translation translation3 =
+                translate.translate(marathiText3, Translate.TranslateOption.sourceLanguage("mr"), Translate.TranslateOption.targetLanguage("en"));
+
+
+
+        System.out.println("Translated text1: " + translation1.getTranslatedText());
+        System.out.println("Translated text2: " + translation1.getTranslatedText());
+        System.out.println("Translated text3: " + translation1.getTranslatedText());
+
+
+    }
+}
